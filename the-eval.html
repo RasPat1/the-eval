@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>THE EVAL — If anyone plays it, everyone dies.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Newsreader:ital,wght@1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0b;
+    --bone:#ece8df;
+    --bone-dim:#a8a59c;
+    --mute:#56544e;
+    --line:#26252a;
+    --blood:#e63227;
+    --acid:#d6ff3a;
+    --card-edge:#2a2930;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--bone);font-family:"JetBrains Mono",monospace;-webkit-font-smoothing:antialiased}
+  body{
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(230,50,39,.08), transparent 50%),
+      radial-gradient(ellipse at 80% 100%, rgba(214,255,58,.04), transparent 50%);
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.06;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  .display{font-family:"Antonio",sans-serif;font-weight:700;letter-spacing:-.01em;line-height:.85;text-transform:uppercase}
+  .flavor{font-family:"Newsreader",serif;font-style:italic}
+
+  main{max-width:1280px;margin:0 auto;padding:0 32px}
+  section{padding:120px 0;border-bottom:1px solid var(--line);position:relative}
+  .section-mark{position:absolute;top:24px;left:32px;right:32px;display:flex;justify-content:space-between;font-size:11px;color:var(--mute);letter-spacing:.2em;text-transform:uppercase}
+  .section-mark span:last-child{color:var(--blood)}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:18px 32px;display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.2em;text-transform:uppercase;background:linear-gradient(to bottom,var(--bg),transparent);backdrop-filter:blur(4px)}
+  nav .brand{color:var(--bone);font-weight:700}
+  nav .right{color:var(--bone-dim)}
+  nav .blink{display:inline-block;width:8px;height:8px;background:var(--blood);border-radius:50%;margin-right:8px;vertical-align:middle;animation:blink 1.4s infinite}
+  @keyframes blink{50%{opacity:.2}}
+
+  .hero{padding:180px 0 140px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+  .hero h1{font-size:clamp(120px,22vw,360px);color:var(--bone);position:relative;z-index:2;font-family:"Antonio",sans-serif;font-weight:700;line-height:.85;text-transform:uppercase;letter-spacing:-.01em}
+  .hero h1 .of{display:block;font-size:.08em;letter-spacing:.4em;color:var(--blood);margin-bottom:24px;font-weight:400}
+  .hero .tag{margin-top:48px;font-size:clamp(28px,4vw,56px);max-width:18ch;line-height:1.05;color:var(--bone);font-family:"Antonio",sans-serif;font-weight:600;text-transform:uppercase}
+  .hero .tag em{color:var(--blood);font-style:normal}
+  .hero .meta{margin-top:64px;display:flex;gap:48px;flex-wrap:wrap;align-items:center;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-dim)}
+  .hero .meta .divider{width:32px;height:1px;background:var(--mute)}
+  .cta{display:inline-block;margin-top:48px;padding:22px 40px;background:var(--blood);color:var(--bone);font-family:"Antonio",sans-serif;font-size:20px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:transform .2s, box-shadow .2s}
+  .cta:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--bone)}
+  .cta.ghost{background:transparent;color:var(--bone);border:1px solid var(--bone)}
+  .cta.ghost:hover{background:var(--bone);color:var(--bg);box-shadow:6px 6px 0 var(--blood)}
+
+  .hero-bg-text{position:absolute;right:-40px;bottom:-60px;font-family:"Antonio",sans-serif;font-weight:700;font-size:280px;color:transparent;-webkit-text-stroke:1px var(--line);line-height:.8;pointer-events:none;z-index:0;text-transform:uppercase}
+
+  .card{
+    background:linear-gradient(180deg,#1a1a1d,#101012);
+    border:1px solid var(--card-edge);
+    border-radius:14px;
+    padding:22px 22px 20px;
+    position:relative;
+    color:var(--bone);
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.04);
+    display:flex;flex-direction:column;
+    min-height:380px;
+    overflow:hidden;
+  }
+  .card .corner{position:absolute;top:14px;right:18px;font-size:9px;letter-spacing:.18em;color:var(--mute);text-transform:uppercase}
+  .card .type{font-size:9px;letter-spacing:.22em;color:var(--blood);text-transform:uppercase;margin-bottom:14px}
+  .card .name{font-family:"Antonio",sans-serif;font-weight:700;font-size:30px;line-height:.95;text-transform:uppercase;margin-bottom:10px}
+  .card .art{flex:1;min-height:120px;border:1px solid var(--line);background:#0c0c0e;margin:14px 0;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-radius:6px}
+  .card .mech{font-size:11px;line-height:1.55;color:var(--bone);border-top:1px solid var(--line);padding-top:14px;margin-top:auto}
+  .card .mech .arrow{color:var(--blood);margin-right:6px}
+  .card .flav{font-family:"Newsreader",serif;font-style:italic;font-size:12px;color:var(--bone-dim);margin-top:12px;line-height:1.45}
+
+  .section-title{font-family:"Antonio",sans-serif;font-weight:700;font-size:14px;letter-spacing:.3em;text-transform:uppercase;color:var(--blood);margin-bottom:48px;display:flex;align-items:center;gap:16px}
+  .section-title::before{content:"";width:48px;height:1px;background:var(--blood)}
+  .factions-grid{display:grid;grid-template-columns:repeat(3,1fr) .7fr;gap:24px}
+  @media(max-width:1000px){.factions-grid{grid-template-columns:repeat(2,1fr);gap:32px}}
+  @media(max-width:600px){.factions-grid{grid-template-columns:1fr}}
+  .card.faction .ability{font-family:"Antonio",sans-serif;font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:var(--blood);margin-top:8px}
+
+  .faction-deck{position:relative;min-height:380px;display:flex;align-items:center;justify-content:center}
+  .faction-deck .stub{
+    position:absolute;width:88%;height:88%;
+    background:linear-gradient(180deg,#16161a,#0c0c0e);
+    border:1px solid var(--card-edge);border-radius:14px;
+    padding:22px;display:flex;flex-direction:column;justify-content:space-between;
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.85), inset 0 1px 0 rgba(255,255,255,.03);
+  }
+  .faction-deck .stub:nth-child(1){transform:rotate(-5deg) translate(-18px,12px);opacity:.65;z-index:1}
+  .faction-deck .stub:nth-child(2){transform:rotate(4deg) translate(14px,-8px);opacity:.85;z-index:2}
+  .faction-deck .stub .corner{position:absolute;top:14px;right:18px;font-size:9px;letter-spacing:.18em;color:var(--mute);text-transform:uppercase}
+  .faction-deck .stub .stub-name{font-family:"Antonio",sans-serif;font-weight:700;font-size:24px;line-height:.95;text-transform:uppercase;color:var(--bone-dim);margin-top:30px}
+  .faction-deck .stub .stub-tag{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--blood);margin-top:8px}
+  .faction-deck .stub .lock{position:absolute;bottom:18px;right:18px;font-size:10px;color:var(--mute);letter-spacing:.15em;text-transform:uppercase}
+
+  .asymmetric{margin-top:48px;padding:24px 28px;border:1px dashed var(--card-edge);border-left:2px solid var(--blood);display:flex;gap:32px;align-items:center;flex-wrap:wrap;background:rgba(230,50,39,.02)}
+  .asymmetric .or{font-family:"Antonio",sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--blood);font-weight:700}
+  .asymmetric .roles{display:flex;gap:24px;flex-wrap:wrap;flex:1}
+  .asymmetric .role{display:flex;flex-direction:column;gap:4px}
+  .asymmetric .role .rname{font-family:"Antonio",sans-serif;font-size:18px;letter-spacing:.06em;text-transform:uppercase;color:var(--bone)}
+  .asymmetric .role .rdesc{font-family:"Newsreader",serif;font-style:italic;font-size:12px;color:var(--bone-dim)}
+
+  .centerpiece{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;max-width:920px;margin:0 auto}
+  @media(max-width:780px){.centerpiece{grid-template-columns:1fr}}
+  .centerpiece .card{min-height:440px}
+  .centerpiece .card .art{min-height:240px}
+  .center-quote{grid-column:1/-1;text-align:center;font-family:"Newsreader",serif;font-style:italic;font-size:clamp(28px,4vw,52px);line-height:1.15;color:var(--bone);margin-top:24px;max-width:18ch;margin-left:auto;margin-right:auto}
+  .center-quote .amp{color:var(--blood)}
+
+  .six-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:900px){.six-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.six-grid{grid-template-columns:1fr}}
+  .six-grid .card:nth-child(odd){transform:rotate(-.6deg)}
+  .six-grid .card:nth-child(even){transform:rotate(.5deg)}
+
+  .board-svg{width:100%;height:auto;display:block;border:1px solid var(--card-edge);border-radius:8px;background:#0c0c0e}
+
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  @media(max-width:900px){.meta-grid{grid-template-columns:1fr}}
+  .vibe-tokens{display:flex;gap:24px;justify-content:center;flex-wrap:wrap}
+  .token{
+    width:200px;height:200px;border-radius:50%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border:6px double var(--bone);
+    background:radial-gradient(circle at 30% 30%,#1c1c20,#0a0a0b);
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.9), inset 0 0 30px rgba(0,0,0,.6);
+    position:relative;
+    text-align:center;padding:20px;
+  }
+  .token.vibe{border-color:var(--acid)}
+  .token.vibe .label{color:var(--acid)}
+  .token .label{font-family:"Antonio",sans-serif;font-size:24px;letter-spacing:.15em;text-transform:uppercase;color:var(--bone);line-height:1}
+  .token .sub{font-family:"Newsreader",serif;font-style:italic;font-size:11px;color:var(--bone-dim);margin-top:10px;max-width:14ch;line-height:1.3}
+  .token::before{content:"";position:absolute;inset:14px;border-radius:50%;border:1px solid rgba(255,255,255,.06)}
+  .meta-quote{font-family:"Newsreader",serif;font-style:italic;font-size:24px;line-height:1.4;color:var(--bone);max-width:30ch}
+  .meta-quote .star{color:var(--blood);font-size:14px;vertical-align:super}
+
+  .gpu-wrap{display:flex;flex-direction:column;align-items:center;gap:32px}
+  .gpu-svg{width:min(720px,100%);height:auto}
+  .gpu-cap{font-family:"Newsreader",serif;font-style:italic;font-size:22px;color:var(--bone-dim);text-align:center}
+
+  .video-wrap{display:flex;flex-direction:column;align-items:center;gap:24px}
+  .video-frame{width:min(340px,80%);aspect-ratio:9/16;background:#000;border:1px solid var(--card-edge);border-radius:18px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .video-frame::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.02) 0 2px,transparent 2px 4px)}
+  .video-frame .play{width:80px;height:80px;border-radius:50%;background:rgba(0,0,0,.6);border:2px solid var(--bone);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);z-index:2}
+  .video-frame .play::after{content:"";border-left:18px solid var(--bone);border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:6px}
+  .video-frame .clips{position:absolute;inset:0;z-index:1;opacity:.4}
+  .video-cap{font-family:"Newsreader",serif;font-style:italic;font-size:20px;color:var(--bone)}
+
+  footer{padding:80px 32px 60px;border-top:1px solid var(--line);text-align:center}
+  footer .big{font-family:"Antonio",sans-serif;font-size:clamp(60px,10vw,160px);font-weight:700;line-height:.85;text-transform:uppercase;color:transparent;-webkit-text-stroke:1px var(--bone);margin-bottom:48px}
+  footer .row{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;align-items:center;margin-top:32px}
+  footer input{background:transparent;border:none;border-bottom:1px solid var(--bone);color:var(--bone);padding:12px 4px;font-family:"JetBrains Mono",monospace;font-size:13px;width:240px;outline:none}
+  footer input::placeholder{color:var(--mute)}
+  footer .legal{margin-top:60px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+  footer .legal span{color:var(--blood)}
+
+  .strip{background:var(--blood);color:var(--bg);padding:14px 0;overflow:hidden;white-space:nowrap;font-family:"Antonio",sans-serif;font-size:18px;letter-spacing:.2em;text-transform:uppercase;font-weight:700}
+  .strip-inner{display:inline-block;animation:scroll 30s linear infinite}
+  .strip-inner span{margin:0 24px}
+  .strip-inner span::after{content:"✦";margin-left:48px;color:var(--bg)}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">◣ THE EVAL</div>
+  <div class="right"><span class="blink"></span>PRE-ORDER OPEN · SHIPS Q3</div>
+</nav>
+
+<main>
+
+<section class="hero">
+  <div class="section-mark"><span>FILE 001 / HERO</span><span>● LIVE</span></div>
+  <h1>
+    <span class="of">A SATIRICAL BOARD GAME ABOUT THE END OF THE WORLD</span>
+    THE<br>EVAL
+  </h1>
+  <p class="tag">If anyone plays it, <em>everyone dies.</em></p>
+  <div class="meta">
+    <span>02–08 PLAYERS</span><span class="divider"></span>
+    <span>60–90 MINUTES</span><span class="divider"></span>
+    <span>AGES: BEYOND HELP</span>
+  </div>
+  <a href="#" class="cta">Pre-order ▸</a>
+  <div class="hero-bg-text">AGI / AGI</div>
+</section>
+</main>
+
+<div class="strip"><div class="strip-inner">
+  <span>GOAL · REACH AGI WITHOUT DESTROYING CIVILIZATION</span>
+  <span>GOAL · REACH AGI WITHOUT DESTROYING CIVILIZATION</span>
+  <span>GOAL · REACH AGI WITHOUT DESTROYING CIVILIZATION</span>
+  <span>GOAL · REACH AGI WITHOUT DESTROYING CIVILIZATION</span>
+</div></div>
+
+<main>
+
+<section>
+  <div class="section-mark"><span>FILE 002 / FACTIONS</span><span>06 LABS · +2 ASYMMETRIC ROLES</span></div>
+  <h2 class="section-title">Meet The Labs</h2>
+  <div class="factions-grid">
+
+    <div class="card faction">
+      <div class="corner">FAC · 01</div>
+      <div class="type">Faction Card</div>
+      <div class="name">Prometheus<br>Labs</div>
+      <div class="art">
+        <svg viewBox="0 0 200 120" width="100%"><circle cx="100" cy="60" r="34" fill="none" stroke="#e63227" stroke-width="1.5"/><circle cx="100" cy="60" r="22" fill="none" stroke="#ece8df" stroke-width=".7"/><line x1="100" y1="20" x2="100" y2="100" stroke="#ece8df" stroke-width=".5"/><line x1="60" y1="60" x2="140" y2="60" stroke="#ece8df" stroke-width=".5"/><text x="100" y="64" text-anchor="middle" font-family="Antonio" font-size="10" fill="#ece8df" letter-spacing="2">PMTH</text></svg>
+      </div>
+      <div class="ability">▸ Mission Drift</div>
+      <div class="mech">Once per game, flip between nonprofit and for-profit status to dodge a regulation card or raise emergency capital.</div>
+      <div class="flav">"Our charter is a living document. Mostly it lives in the shredder."</div>
+    </div>
+
+    <div class="card faction">
+      <div class="corner">FAC · 02</div>
+      <div class="type">Faction Card</div>
+      <div class="name">xCorp<br>AI</div>
+      <div class="art">
+        <svg viewBox="0 0 200 120" width="100%"><text x="100" y="92" text-anchor="middle" font-family="Antonio" font-weight="700" font-size="90" fill="#ece8df">𝕏</text></svg>
+      </div>
+      <div class="ability">▸ Main Character Energy</div>
+      <div class="mech">Once per round, tweet something unhinged. Roll a die: 1–3 discard a Talent card, 4–6 gain a Hype token.</div>
+      <div class="flav">"Founder mode is a personality disorder with a market cap."</div>
+    </div>
+
+    <div class="card faction">
+      <div class="corner">FAC · 03</div>
+      <div class="type">Faction Card</div>
+      <div class="name">Deep<br>Oracle</div>
+      <div class="art">
+        <svg viewBox="0 0 200 120" width="100%"><g fill="none" stroke="#ece8df" stroke-width=".8"><circle cx="100" cy="60" r="40"/><ellipse cx="100" cy="60" rx="40" ry="14"/><ellipse cx="100" cy="60" rx="14" ry="40"/><ellipse cx="100" cy="60" rx="28" ry="40" transform="rotate(45 100 60)"/><ellipse cx="100" cy="60" rx="28" ry="40" transform="rotate(-45 100 60)"/></g></svg>
+      </div>
+      <div class="ability">▸ Infinite Runway</div>
+      <div class="mech">Parent company subsidizes you. Immune to bankruptcy, but must skip one action per round to attend mandatory all-hands.</div>
+      <div class="flav">"Synergies. So many synergies. They cannot be counted."</div>
+    </div>
+
+    <div class="faction-deck">
+      <div class="stub">
+        <div class="corner">FAC · 05</div>
+        <div>
+          <div class="stub-name">Meta<br>Open</div>
+          <div class="stub-tag">▸ Open Source It</div>
+        </div>
+        <div class="lock">+ 2 MORE</div>
+      </div>
+      <div class="stub">
+        <div class="corner">FAC · 04</div>
+        <div>
+          <div class="stub-name">Anthrotek</div>
+          <div class="stub-tag">▸ Constitutional AI</div>
+        </div>
+        <div class="lock">↻ FLIP TO PLAY</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="asymmetric">
+    <div class="or">Or play<br>asymmetric ▸</div>
+    <div class="roles">
+      <div class="role">
+        <div class="rname">CCP AI Bureau</div>
+        <div class="rdesc">No safety regs. Steals weights. Wins ugly.</div>
+      </div>
+      <div class="role">
+        <div class="rname">US Gov / Regulator</div>
+        <div class="rdesc">Doesn't build AGI. Decides who's allowed to.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-mark"><span>FILE 003 / EVENT PAIR</span><span>HOLY SHIT</span></div>
+  <div class="centerpiece">
+
+    <div class="card">
+      <div class="corner">EVT · 047</div>
+      <div class="type">Event Card</div>
+      <div class="name">Cure All<br>Diseases</div>
+      <div class="art">
+        <svg viewBox="0 0 200 200" width="100%"><g fill="none" stroke="#ece8df" stroke-width="1"><path d="M30 100 Q60 40 100 100 T170 100"/><path d="M30 110 Q60 50 100 110 T170 110" opacity=".7"/><path d="M30 120 Q60 60 100 120 T170 120" opacity=".5"/><path d="M30 130 Q60 70 100 130 T170 130" opacity=".3"/></g><circle cx="100" cy="100" r="6" fill="#d6ff3a"/></svg>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="corner">EVT · 048</div>
+      <div class="type">Event Card</div>
+      <div class="name">Create<br>Incurable<br>Disease</div>
+      <div class="art">
+        <svg viewBox="0 0 200 200" width="100%"><g fill="none" stroke="#e63227" stroke-width="1"><path d="M30 100 Q60 40 100 100 T170 100"/><path d="M30 110 Q60 50 100 110 T170 110" opacity=".7"/><path d="M30 120 Q60 60 100 120 T170 120" opacity=".5"/><path d="M30 130 Q60 70 100 130 T170 130" opacity=".3"/></g><circle cx="100" cy="100" r="6" fill="#e63227"/></svg>
+      </div>
+    </div>
+
+    <p class="center-quote">"AlphaFold for the cure.<br><span class="amp">OmegaFold</span> for the encore."</p>
+
+  </div>
+</section>
+
+<section>
+  <div class="section-mark"><span>FILE 004 / EVENT DECK</span><span>120 CARDS TOTAL</span></div>
+  <h2 class="section-title">A Few Things That Could Happen</h2>
+  <div class="six-grid">
+
+    <div class="card">
+      <div class="corner">EVT · 011</div>
+      <div class="type">Wildcard</div>
+      <div class="name">NVIDIA<br>Becomes a<br>Country</div>
+      <div class="art">
+        <svg viewBox="0 0 200 140" width="100%">
+          <text x="20" y="60" font-family="Antonio" font-size="44" font-weight="700" fill="#76b900">NVID</text>
+          <path d="M20 75 Q90 65 180 80 L175 95 Q90 80 20 90 Z" fill="#76b900" opacity=".7"/>
+          <circle cx="140" cy="42" r="14" fill="#ece8df"/>
+          <path d="M130 38 Q140 32 150 38 Q150 48 140 50 Q130 48 130 38" fill="#0a0a0b"/>
+          <line x1="20" y1="115" x2="180" y2="115" stroke="#76b900"/>
+        </svg>
+      </div>
+      <div class="mech" style="visibility:hidden">.</div>
+    </div>
+
+    <div class="card">
+      <div class="corner">EVT · 023</div>
+      <div class="type">Technical</div>
+      <div class="name">The Bitter<br>Lesson,<br>Again</div>
+      <div class="art">
+        <svg viewBox="0 0 200 120" width="100%"><g stroke="#ece8df" fill="none"><line x1="20" y1="100" x2="180" y2="100"/><line x1="20" y1="100" x2="20" y2="20"/><path d="M20 95 L60 80 L100 50 L140 30 L180 22" stroke="#e63227" stroke-width="1.5"/></g><text x="155" y="112" font-family="JetBrains Mono" font-size="7" fill="#56544e">FLOPS</text></svg>
+      </div>
+      <div class="mech"><span class="arrow">→</span>Discard all research and algorithmic efficiency cards in play. Only raw Compute matters. Always has. Always will.</div>
+      <div class="flav">"Rich Sutton was right and you know it."</div>
+    </div>
+
+    <div class="card">
+      <div class="corner">EVT · 067</div>
+      <div class="type">Safety</div>
+      <div class="name">You<br>Spawned<br>MechaHitler</div>
+      <div class="art">
+        <svg viewBox="0 0 200 120" width="100%"><rect x="60" y="20" width="80" height="80" fill="none" stroke="#e63227" stroke-width="1.5"/><circle cx="85" cy="50" r="4" fill="#e63227"/><circle cx="115" cy="50" r="4" fill="#e63227"/><line x1="80" y1="80" x2="120" y2="80" stroke="#e63227" stroke-width="2"/><line x1="60" y1="20" x2="40" y2="10" stroke="#e63227"/><line x1="140" y1="20" x2="160" y2="10" stroke="#e63227"/></svg>
+      </div>
+      <div class="mech"><span class="arrow">→</span>Gain 5 Alignment Debt. Public Panic +3. Congressional hearing in 2 rounds.</div>
+      <div class="flav">"It was supposed to be a helpful assistant."</div>
+    </div>
+
+    <div class="card">
+      <div class="corner">EVT · 089</div>
+      <div class="type">Political</div>
+      <div class="name">NIMBYs<br>Block Data<br>Center</div>
+      <div class="art">
+        <svg viewBox="0 0 200 120" width="100%"><g stroke="#ece8df" fill="none"><path d="M40 90 L40 50 L70 30 L100 50 L100 90 Z"/><rect x="55" y="65" width="12" height="25"/><rect x="78" y="58" width="14" height="14"/><path d="M120 90 L120 60 L140 45 L160 60 L160 90 Z"/><rect x="132" y="70" width="10" height="20"/></g><text x="100" y="110" text-anchor="middle" font-family="Antonio" font-size="9" fill="#e63227" letter-spacing="2">NOT IN MY YARD</text></svg>
+      </div>
+      <div class="mech"><span class="arrow">→</span>Lose 1 Energy. Pay 2 Capital to relocate or spend 1 Lobby action to override.</div>
+      <div class="flav">"They formed a Facebook group. It has 12,000 members."</div>
+    </div>
+
+    <div class="card">
+      <div class="corner">EVT · 102</div>
+      <div class="type">Economic</div>
+      <div class="name">Bubble<br>Pop</div>
+      <div class="art">
+        <svg viewBox="0 0 200 120" width="100%"><circle cx="100" cy="60" r="38" fill="none" stroke="#e63227" stroke-width="1" stroke-dasharray="3 3"/><g stroke="#e63227" stroke-width="1.5"><line x1="50" y1="20" x2="60" y2="30"/><line x1="150" y1="20" x2="140" y2="30"/><line x1="50" y1="100" x2="60" y2="90"/><line x1="150" y1="100" x2="140" y2="90"/><line x1="40" y1="60" x2="55" y2="60"/><line x1="160" y1="60" x2="145" y2="60"/></g><text x="100" y="68" text-anchor="middle" font-family="Antonio" font-size="20" fill="#e63227">POP</text></svg>
+      </div>
+      <div class="mech"><span class="arrow">→</span>GDP drops 5. All players lose half their Capital. Fundraising yields 0 for 2 rounds.</div>
+      <div class="flav">"Turns out spending $200B per year on autocomplete was not, in fact, a business model."</div>
+    </div>
+
+    <div class="card">
+      <div class="corner">EVT · 114</div>
+      <div class="type">Wildcard</div>
+      <div class="name">The<br>Merge</div>
+      <div class="art">
+        <svg viewBox="0 0 200 120" width="100%"><circle cx="75" cy="60" r="30" fill="none" stroke="#ece8df" stroke-width="1"/><circle cx="125" cy="60" r="30" fill="none" stroke="#ece8df" stroke-width="1"/><path d="M95 40 Q100 60 95 80 M105 40 Q100 60 105 80" stroke="#e63227" fill="none"/></svg>
+      </div>
+      <div class="mech"><span class="arrow">→</span>Two players may voluntarily combine forces. Roll for CEO. Loser becomes CTO and loses 1 action per round to "strategic visioning."</div>
+      <div class="flav">"We're thrilled to announce this merger of equals."</div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="section-mark"><span>FILE 005 / GAME BOARD</span><span>TOP-DOWN VIEW</span></div>
+  <h2 class="section-title">The Board</h2>
+  <svg class="board-svg" viewBox="0 0 1200 720" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M40 0H0V40" fill="none" stroke="#1a1a1d" stroke-width=".5"/>
+      </pattern>
+    </defs>
+    <rect width="1200" height="720" fill="#0c0c0e"/>
+    <rect width="1200" height="720" fill="url(#grid)"/>
+
+    <text x="40" y="50" font-family="Antonio" font-size="22" fill="#ece8df" letter-spacing="6">THE EVAL · BOARD v1.0</text>
+    <text x="40" y="68" font-family="JetBrains Mono" font-size="9" fill="#56544e" letter-spacing="2">CLASSIFIED · DO NOT DISTRIBUTE</text>
+
+    <g stroke="#26252a" stroke-width="1" fill="#101013">
+      <path d="M120 200 L320 180 L340 290 L300 350 L150 340 Z"/>
+      <path d="M520 180 L640 170 L660 240 L600 280 L530 270 Z"/>
+      <path d="M780 200 L920 180 L960 270 L880 320 L790 290 Z"/>
+      <path d="M620 290 L740 280 L760 370 L660 390 L600 340 Z"/>
+      <path d="M945 295 l16 8 l-4 22 l-16 -6 z"/>
+    </g>
+
+    <g font-family="JetBrains Mono" font-size="10" fill="#a8a59c" letter-spacing="2">
+      <text x="180" y="270">US GOVERNMENT</text>
+      <text x="180" y="284" fill="#e63227">▸ REGULATOR ZONE</text>
+      <text x="555" y="225">EU / AI ACT 2.0</text>
+      <text x="820" y="245">CHINA / CCP</text>
+      <text x="640" y="335" fill="#d6ff3a">SAUDI WEALTH FUND</text>
+      <text x="640" y="349">▸ +10 CAPITAL · STRINGS ATTACHED</text>
+      <text x="975" y="320" fill="#e63227">TSMC</text>
+    </g>
+
+    <g>
+      <text x="780" y="430" font-family="Antonio" font-size="14" fill="#e63227" letter-spacing="3">CHINA ADVERSARY TRACK</text>
+      <rect x="780" y="440" width="380" height="22" fill="none" stroke="#e63227"/>
+      <rect x="780" y="440" width="140" height="22" fill="#e63227" opacity=".5"/>
+      <g font-family="JetBrains Mono" font-size="8" fill="#a8a59c">
+        <text x="785" y="478">L1</text><text x="847" y="478">L2</text><text x="909" y="478">L3</text><text x="971" y="478">L4</text><text x="1033" y="478">ASI</text>
+      </g>
+    </g>
+
+    <g>
+      <text x="40" y="540" font-family="Antonio" font-size="14" fill="#d6ff3a" letter-spacing="3">GDP / ECONOMIC HEALTH</text>
+      <line x1="40" y1="560" x2="560" y2="560" stroke="#26252a" stroke-width="2"/>
+      <g font-family="JetBrains Mono" font-size="8" fill="#a8a59c">
+        <text x="40" y="578">0</text><text x="100" y="578">4</text><text x="160" y="578">8</text><text x="220" y="578">10</text><text x="280" y="578">12</text><text x="340" y="578">15</text><text x="400" y="578">18</text><text x="460" y="578">20</text>
+      </g>
+      <circle cx="220" cy="560" r="8" fill="#d6ff3a"/>
+    </g>
+
+    <g>
+      <text x="40" y="618" font-family="Antonio" font-size="14" fill="#e63227" letter-spacing="3">PUBLIC PANIC</text>
+      <line x1="40" y1="638" x2="560" y2="638" stroke="#26252a" stroke-width="2"/>
+      <g font-family="JetBrains Mono" font-size="8" fill="#a8a59c">
+        <text x="40" y="656">0</text><text x="100" y="656">3</text><text x="160" y="656">5</text><text x="220" y="656">10</text><text x="280" y="656">15</text><text x="460" y="656">SHUTDOWN</text>
+      </g>
+      <circle cx="100" cy="638" r="8" fill="#e63227"/>
+    </g>
+
+    <g transform="translate(380,80)">
+      <text x="0" y="0" font-family="Antonio" font-size="16" fill="#ece8df" letter-spacing="4">CAPABILITY LADDER</text>
+      <g stroke="#ece8df" fill="none">
+        <line x1="20" y1="20" x2="20" y2="380"/>
+        <line x1="60" y1="20" x2="60" y2="380"/>
+        <g><line x1="20" y1="40" x2="60" y2="40"/><line x1="20" y1="110" x2="60" y2="110"/><line x1="20" y1="180" x2="60" y2="180"/><line x1="20" y1="250" x2="60" y2="250"/><line x1="20" y1="320" x2="60" y2="320"/></g>
+      </g>
+      <g font-family="JetBrains Mono" font-size="9" fill="#a8a59c">
+        <text x="80" y="44">L1 · IMPRESSIVE DEMO</text>
+        <text x="80" y="114">L2 · USEFUL BUT SCARY</text>
+        <text x="80" y="184">L3 · THE DROP</text>
+        <text x="80" y="254">L4 · OH GOD OH FUCK</text>
+        <text x="80" y="324" fill="#e63227">L5 · AGI ◣</text>
+      </g>
+      <text x="80" y="360" font-family="Newsreader" font-style="italic" font-size="10" fill="#56544e">each rung = +1 OOM compute</text>
+    </g>
+
+    <g stroke="#56544e" stroke-width="1" fill="none">
+      <path d="M20 20 h20 M20 20 v20"/>
+      <path d="M1180 20 h-20 M1180 20 v20"/>
+      <path d="M20 700 h20 M20 700 v-20"/>
+      <path d="M1180 700 h-20 M1180 700 v-20"/>
+    </g>
+  </svg>
+</section>
+
+<section>
+  <div class="section-mark"><span>FILE 006 / META LAYER</span><span>RULES ARE VIBES</span></div>
+  <div class="meta-grid">
+
+    <div class="card" style="max-width:380px">
+      <div class="corner">EVT · 119</div>
+      <div class="type">Meta</div>
+      <div class="name">Learning<br>Rate<br>Decay</div>
+      <div class="art">
+        <svg viewBox="0 0 200 120" width="100%"><g stroke="#ece8df" fill="none"><path d="M20 30 Q40 28 60 40 Q80 70 100 90 Q120 100 140 102 Q160 103 180 104" stroke-width="1.5"/></g><g font-family="JetBrains Mono" font-size="7" fill="#56544e"><text x="20" y="115">step 0</text><text x="160" y="115">step ∞</text></g></svg>
+      </div>
+      <div class="mech"><span class="arrow">→</span>The rulebook can no longer be consulted. Disputes are settled by popular vote, ties broken by Hype.</div>
+      <div class="flav">Because narrative beats truth.</div>
+    </div>
+
+    <div>
+      <div class="vibe-tokens">
+        <div class="token vibe">
+          <div class="label">Vibe<br>Mode</div>
+          <div class="sub">Actions dangerously skip permissions.</div>
+        </div>
+        <div class="token">
+          <div class="label">Try<br>Hard<br>Mode</div>
+          <div class="sub">Unlocks Corporate Espionage.</div>
+        </div>
+      </div>
+      <p class="meta-quote" style="margin-top:48px">"Rules disputes are settled by popular vote. Ties broken by whoever has the most Hype.<span class="star">★</span> Because narrative beats truth."</p>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="section-mark"><span>FILE 007 / HARDWARE</span><span>30 SEC LIMIT</span></div>
+  <div class="gpu-wrap">
+    <svg class="gpu-svg" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="metal" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#3a3a3f"/>
+          <stop offset=".5" stop-color="#1a1a1d"/>
+          <stop offset="1" stop-color="#3a3a3f"/>
+        </linearGradient>
+      </defs>
+
+      <rect x="40" y="60" width="640" height="200" rx="8" fill="url(#metal)" stroke="#56544e" stroke-width="1"/>
+
+      <circle cx="160" cy="160" r="72" fill="#0a0a0b" stroke="#3a3a3f" stroke-width="1.5"/>
+      <g stroke="#56544e" fill="none">
+        <path d="M160 100 Q190 130 160 160 Q130 130 160 100"/>
+        <path d="M220 160 Q190 190 160 160 Q190 130 220 160"/>
+        <path d="M160 220 Q130 190 160 160 Q190 190 160 220"/>
+        <path d="M100 160 Q130 130 160 160 Q130 190 100 160"/>
+      </g>
+      <circle cx="160" cy="160" r="14" fill="#1a1a1d" stroke="#e63227"/>
+
+      <circle cx="560" cy="160" r="72" fill="#0a0a0b" stroke="#3a3a3f" stroke-width="1.5"/>
+      <g stroke="#56544e" fill="none">
+        <path d="M560 100 Q590 130 560 160 Q530 130 560 100"/>
+        <path d="M620 160 Q590 190 560 160 Q590 130 620 160"/>
+        <path d="M560 220 Q530 190 560 160 Q590 190 560 220"/>
+        <path d="M500 160 Q530 130 560 160 Q530 190 500 160"/>
+      </g>
+      <circle cx="560" cy="160" r="14" fill="#1a1a1d" stroke="#e63227"/>
+
+      <rect x="270" y="100" width="180" height="120" rx="4" fill="#0a0a0b" stroke="#56544e" stroke-width="2"/>
+      <rect x="278" y="108" width="164" height="104" rx="2" fill="#0c0c0e" stroke="#1a1a1d"/>
+      <text x="360" y="180" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="58" fill="#e63227" letter-spacing="4">00:30</text>
+      <text x="360" y="200" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#56544e" letter-spacing="3">BENCHMARK TIMER</text>
+
+      <text x="60" y="290" font-family="Antonio" font-size="18" fill="#56544e" letter-spacing="6">EVAL EDITION ◣ 30s TDP</text>
+
+      <g fill="#3a3a3f">
+        <circle cx="55" cy="75" r="3"/><circle cx="665" cy="75" r="3"/>
+        <circle cx="55" cy="245" r="3"/><circle cx="665" cy="245" r="3"/>
+      </g>
+
+      <rect x="100" y="260" width="380" height="20" fill="#1a1a1d" stroke="#56544e"/>
+    </svg>
+    <p class="gpu-cap">"30 seconds. Then you overheat from min-maxing."</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-mark"><span>FILE 008 / FIELD FOOTAGE</span><span>UNCLASSIFIED</span></div>
+  <div class="video-wrap">
+    <div class="video-frame">
+      <svg class="clips" viewBox="0 0 200 360" preserveAspectRatio="xMidYMid slice">
+        <g stroke="#ece8df" stroke-width="1.2" fill="none">
+          <path d="M30 50 v30 a6 6 0 0 0 12 0 v-25 a6 6 0 0 1 12 0 v25"/>
+          <path d="M80 90 v30 a6 6 0 0 0 12 0 v-25 a6 6 0 0 1 12 0 v25" transform="rotate(20 86 105)"/>
+          <path d="M140 70 v30 a6 6 0 0 0 12 0 v-25 a6 6 0 0 1 12 0 v25" transform="rotate(-15 146 85)"/>
+          <path d="M40 180 v30 a6 6 0 0 0 12 0 v-25 a6 6 0 0 1 12 0 v25" transform="rotate(45 46 195)"/>
+          <path d="M120 200 v30 a6 6 0 0 0 12 0 v-25 a6 6 0 0 1 12 0 v25" transform="rotate(-30 126 215)"/>
+          <path d="M70 280 v30 a6 6 0 0 0 12 0 v-25 a6 6 0 0 1 12 0 v25" transform="rotate(60 76 295)"/>
+          <path d="M150 300 v30 a6 6 0 0 0 12 0 v-25 a6 6 0 0 1 12 0 v25" transform="rotate(-50 156 315)"/>
+        </g>
+      </svg>
+      <div class="play"></div>
+    </div>
+    <p class="video-cap">"Ask us about the Paperclip Ending."</p>
+  </div>
+</section>
+
+</main>
+
+<div class="strip"><div class="strip-inner">
+  <span>EVERYBODY DIES · NOBODY WINS · MOSTLY</span>
+  <span>EVERYBODY DIES · NOBODY WINS · MOSTLY</span>
+  <span>EVERYBODY DIES · NOBODY WINS · MOSTLY</span>
+  <span>EVERYBODY DIES · NOBODY WINS · MOSTLY</span>
+</div></div>
+
+<footer>
+  <div class="big">THE / EVAL</div>
+  <a href="#" class="cta">Pre-order ▸</a>
+  <form id="notify-form" class="row">
+    <input type="email" id="notify-email" placeholder="email@end.times" required />
+    <button type="submit" class="cta ghost">Notify me ▸</button>
+  </form>
+  <div id="notify-msg" style="margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.15em;text-transform:uppercase;min-height:20px"></div>
+  <div class="row" style="margin-top:32px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-dim)">
+    <a href="#" style="color:inherit;text-decoration:none">Twitter</a>
+    <a href="#" style="color:inherit;text-decoration:none">Instagram</a>
+    <a href="#" style="color:inherit;text-decoration:none">TikTok</a>
+    <a href="#" style="color:inherit;text-decoration:none">Discord</a>
+  </div>
+  <p class="legal">© THE EVAL · NOT AFFILIATED WITH ANY ACTUAL LAB <span>·</span> ALL RESEMBLANCES INTENTIONAL <span>·</span> NO REFUNDS AFTER ASI</p>
+</footer>
+
+<script>
+document.getElementById('notify-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('notify-email').value;
+  const msg = document.getElementById('notify-msg');
+  const btn = e.target.querySelector('button');
+
+  btn.disabled = true;
+  btn.textContent = '...';
+  msg.style.color = '';
+  msg.textContent = '';
+
+  try {
+    const res = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      msg.style.color = '#ece8df';
+      msg.textContent = data.message === 'Already subscribed'
+        ? 'You\'re already on the list. Brace yourself.'
+        : 'You\'re in. We\'ll find you before the end.';
+      document.getElementById('notify-email').value = '';
+    } else {
+      msg.style.color = '#c41e1e';
+      msg.textContent = data.error || 'Something broke. Try again.';
+    }
+  } catch {
+    msg.style.color = '#c41e1e';
+    msg.textContent = 'Connection failed. The servers may already be gone.';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Notify me ▸';
+});
+</script>
+
+</body>
+</html>
