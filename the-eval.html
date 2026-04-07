@@ -653,10 +653,10 @@ s.parentNode.insertBefore(a,s)};ttq.load('YOUR_TIKTOK_PIXEL_ID');ttq.page()}(win
 </main>
 
 <div class="strip"><div class="strip-inner">
-  <span>EVERYBODY DIES · NOBODY WINS · MOSTLY</span>
-  <span>EVERYBODY DIES · NOBODY WINS · MOSTLY</span>
-  <span>EVERYBODY DIES · NOBODY WINS · MOSTLY</span>
-  <span>EVERYBODY DIES · NOBODY WINS · MOSTLY</span>
+  <span>EVERYBODY DIES · NOBODY WINS · MAYBE AGI</span>
+  <span>EVERYBODY DIES · NOBODY WINS · MAYBE AGI</span>
+  <span>EVERYBODY DIES · NOBODY WINS · MAYBE AGI</span>
+  <span>EVERYBODY DIES · NOBODY WINS · MAYBE AGI</span>
 </div></div>
 
 <footer id="signup">
@@ -735,7 +735,7 @@ async function handleSignup(form, emailId, playtestId, msgId, signupSource) {
     const res = await fetch('/api/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, playtest, ref, signupSource, utmCampaign })
+      body: JSON.stringify({ email, playtest, ref, signupSource, utmCampaign, website: honeypot?.value })
     });
     const data = await res.json();
     if (res.ok) {
