@@ -4,6 +4,15 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>THE EVAL — If anyone plays it, everyone dies.</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='90' font-size='90'>◣</text></svg>">
+<meta name="description" content="A satirical board game about the AI race. 2–8 players. 60–90 minutes. Coming to Kickstarter.">
+<meta property="og:title" content="THE EVAL — If anyone plays it, everyone dies.">
+<meta property="og:description" content="A satirical board game about the AI race. 6 factions. 120 event cards. Everybody dies. Nobody wins. Mostly.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://the-eval.com">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="THE EVAL — If anyone plays it, everyone dies.">
+<meta name="twitter:description" content="A satirical board game about the AI race. Coming to Kickstarter.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Newsreader:ital,wght@1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -51,6 +60,12 @@
   .hero .tag em{color:var(--blood);font-style:normal}
   .hero .meta{margin-top:64px;display:flex;gap:48px;flex-wrap:wrap;align-items:center;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-dim)}
   .hero .meta .divider{width:32px;height:1px;background:var(--mute)}
+  .hero-signup{margin-top:48px;position:relative;z-index:2}
+  .hero-signup .row{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .hero-signup input[type=email]{background:transparent;border:none;border-bottom:1px solid var(--bone);color:var(--bone);padding:12px 4px;font-family:"JetBrains Mono",monospace;font-size:13px;width:240px;outline:none}
+  .hero-signup input[type=email]::placeholder{color:var(--mute)}
+  .hero-signup .cta{margin-top:0}
+  .ohnohoney{opacity:0;position:absolute;top:0;left:0;height:0;width:0;z-index:-1}
   .cta{display:inline-block;margin-top:48px;padding:22px 40px;background:var(--blood);color:var(--bone);font-family:"Antonio",sans-serif;font-size:20px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:transform .2s, box-shadow .2s}
   .cta:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--bone)}
   .cta.ghost{background:transparent;color:var(--bone);border:1px solid var(--bone)}
@@ -167,13 +182,59 @@
   .strip-inner span{margin:0 24px}
   .strip-inner span::after{content:"✦";margin-left:48px;color:var(--bg)}
   @keyframes scroll{to{transform:translateX(-50%)}}
+  .social-proof{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone-dim);margin-bottom:32px}
+  .social-proof strong{color:var(--bone)}
+  .playtest-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:16px;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--bone-dim);cursor:pointer}
+  .playtest-row input[type=checkbox]{accent-color:var(--blood);width:16px;height:16px;cursor:pointer}
 </style>
+
+<!-- PostHog -->
+<script>
+!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+posthog.init('phc_CmqDz6HNeUss3gbdj5xk7LW6xKLLSpWHxpTBasGMpJ7p',{api_host:'/ph',ui_host:'https://us.posthog.com',person_profiles:'identified_only'});
+</script>
+
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','YOUR_META_PIXEL_ID');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_META_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
+
+<!-- Reddit Pixel -->
+<script>
+!function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};
+p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js";t.async=!0;
+var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);
+rdt('init','YOUR_REDDIT_PIXEL_ID');rdt('track','PageVisit');
+</script>
+
+<!-- TikTok Pixel -->
+<script>
+!function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=
+["page","track","identify","instances","debug","on","off","once","ready","alias",
+"group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],
+ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=
+function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);
+return e};ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",
+o=n&&n.partner;ttq._i=ttq._i||{};ttq._i[e]=[];ttq._i[e]._u=r;ttq._t=ttq._t||{};
+ttq._t[e+""]=+new Date;ttq._o=ttq._o||{};ttq._o[e+""]=n||{};var a=d.createElement("script");
+a.type="text/javascript";a.async=!0;a.src=r+"?sdkid="+e+"&lib="+t;var s=d.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(a,s)};ttq.load('YOUR_TIKTOK_PIXEL_ID');ttq.page()}(window,document,'ttq');
+</script>
+
 </head>
 <body>
 
 <nav>
   <div class="brand">◣ THE EVAL</div>
-  <div class="right"><span class="blink"></span>PRE-ORDER OPEN · SHIPS Q3</div>
+  <div class="right"><span class="blink"></span>COMING TO KICKSTARTER</div>
 </nav>
 
 <main>
@@ -186,11 +247,22 @@
   </h1>
   <p class="tag">If anyone plays it, <em>everyone dies.</em></p>
   <div class="meta">
-    <span>02–08 PLAYERS</span><span class="divider"></span>
+    <span>03–06 PLAYERS</span><span class="divider"></span>
     <span>60–90 MINUTES</span><span class="divider"></span>
     <span>AGES: BEYOND HELP</span>
   </div>
-  <a href="#" class="cta">Pre-order ▸</a>
+  <form id="hero-form" class="hero-signup">
+    <input type="text" name="website" class="ohnohoney" tabindex="-1" autocomplete="off" />
+    <div class="row" style="justify-content:flex-start">
+      <input type="email" id="hero-email" placeholder="email@end.times" required />
+      <button type="submit" class="cta">Notify me at launch ▸</button>
+    </div>
+    <label class="playtest-row" style="justify-content:flex-start">
+      <input type="checkbox" id="hero-playtest" />
+      I want to playtest — send me the prototype
+    </label>
+    <div id="hero-msg" style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.15em;text-transform:uppercase;min-height:20px"></div>
+  </form>
   <div class="hero-bg-text">AGI / AGI</div>
 </section>
 </main>
@@ -585,29 +657,70 @@
   <span>EVERYBODY DIES · NOBODY WINS · MOSTLY</span>
 </div></div>
 
-<footer>
+<footer id="signup">
   <div class="big">THE / EVAL</div>
-  <a href="#" class="cta">Pre-order ▸</a>
-  <form id="notify-form" class="row">
-    <input type="email" id="notify-email" placeholder="email@end.times" required />
-    <button type="submit" class="cta ghost">Notify me ▸</button>
+  <div id="social-proof" class="social-proof"></div>
+  <form id="notify-form">
+    <input type="text" name="website" class="ohnohoney" tabindex="-1" autocomplete="off" />
+    <div class="row">
+      <input type="email" id="notify-email" placeholder="email@end.times" required />
+      <button type="submit" class="cta">Notify me at launch ▸</button>
+    </div>
+    <label class="playtest-row">
+      <input type="checkbox" id="playtest-check" />
+      I want to playtest — send me the prototype
+    </label>
   </form>
   <div id="notify-msg" style="margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.15em;text-transform:uppercase;min-height:20px"></div>
-  <div class="row" style="margin-top:32px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-dim)">
-    <a href="#" style="color:inherit;text-decoration:none">Twitter</a>
-    <a href="#" style="color:inherit;text-decoration:none">Instagram</a>
-    <a href="#" style="color:inherit;text-decoration:none">TikTok</a>
-    <a href="#" style="color:inherit;text-decoration:none">Discord</a>
-  </div>
   <p class="legal">© THE EVAL · NOT AFFILIATED WITH ANY ACTUAL LAB <span>·</span> ALL RESEMBLANCES INTENTIONAL <span>·</span> NO REFUNDS AFTER ASI</p>
 </footer>
 
 <script>
-document.getElementById('notify-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = document.getElementById('notify-email').value;
-  const msg = document.getElementById('notify-msg');
-  const btn = e.target.querySelector('button');
+const ref = new URLSearchParams(window.location.search).get('ref') || 'direct';
+
+// Funnel: track scroll to cards section
+const cardsSection = document.querySelector('.factions-grid');
+if (cardsSection) {
+  const scrollObs = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      if (typeof posthog !== 'undefined') posthog.capture('scrolled_to_cards');
+      scrollObs.disconnect();
+    }
+  }, { threshold: 0.3 });
+  scrollObs.observe(cardsSection);
+}
+
+// Funnel: track form focus
+document.querySelectorAll('input[type=email]').forEach((input) => {
+  input.addEventListener('focus', function handler() {
+    if (typeof posthog !== 'undefined') posthog.capture('signup_form_focused');
+    input.removeEventListener('focus', handler);
+  });
+});
+
+// Social proof
+(async () => {
+  try {
+    const res = await fetch('/api/count');
+    const { count } = await res.json();
+    if (count > 0) {
+      const oom = Math.floor(Math.log10(count));
+      document.getElementById('social-proof').innerHTML =
+        '<strong>~10<sup>' + oom + '</sup> humans</strong> already on the waitlist';
+    }
+  } catch {}
+})();
+
+// Shared submit handler
+async function handleSignup(form, emailId, playtestId, msgId) {
+  // Honeypot check
+  const honeypot = form.querySelector('input[name="website"]');
+  if (honeypot && honeypot.value) return;
+
+  const email = document.getElementById(emailId).value;
+  const playtest = document.getElementById(playtestId).checked;
+  const msg = document.getElementById(msgId);
+  const btn = form.querySelector('button');
 
   btn.disabled = true;
   btn.textContent = '...';
@@ -618,15 +731,22 @@ document.getElementById('notify-form').addEventListener('submit', async (e) => {
     const res = await fetch('/api/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email })
+      body: JSON.stringify({ email, playtest, ref })
     });
     const data = await res.json();
     if (res.ok) {
       msg.style.color = '#ece8df';
       msg.textContent = data.message === 'Already subscribed'
         ? 'You\'re already on the list. Brace yourself.'
-        : 'You\'re in. We\'ll find you before the end.';
-      document.getElementById('notify-email').value = '';
+        : playtest
+          ? 'You\'re in. Playtest invite incoming. Godspeed.'
+          : 'You\'re in. We\'ll find you before the end.';
+      document.getElementById(emailId).value = '';
+      document.getElementById(playtestId).checked = false;
+      if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: playtest ? 'playtest' : 'waitlist' });
+      if (typeof ttq !== 'undefined') ttq.track('SubmitForm', { content_name: playtest ? 'playtest' : 'waitlist' });
+      if (typeof rdt !== 'undefined') rdt('track', 'SignUp');
+      if (typeof posthog !== 'undefined') posthog.capture('signup_completed', { playtest, ref });
     } else {
       msg.style.color = '#c41e1e';
       msg.textContent = data.error || 'Something broke. Try again.';
@@ -635,9 +755,18 @@ document.getElementById('notify-form').addEventListener('submit', async (e) => {
     msg.style.color = '#c41e1e';
     msg.textContent = 'Connection failed. The servers may already be gone.';
   }
-
   btn.disabled = false;
-  btn.textContent = 'Notify me ▸';
+  btn.textContent = 'Notify me at launch ▸';
+}
+
+document.getElementById('hero-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  handleSignup(e.target, 'hero-email', 'hero-playtest', 'hero-msg');
+});
+
+document.getElementById('notify-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  handleSignup(e.target, 'notify-email', 'playtest-check', 'notify-msg');
 });
 </script>
 
