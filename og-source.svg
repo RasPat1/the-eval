@@ -43,15 +43,95 @@
   <!-- Triangle mark -->
   <text x="62" y="540" font-family="Arial, sans-serif" font-size="28" fill="#ece8df" opacity="0.25">&#9699;</text>
 
-  <!-- Card 1 (back): NIMBYs — bottom of stack, rotated left, more visible -->
-  <g transform="translate(580, 120) rotate(-5)">
+  <!-- === TOKENS: stacked vertically, center === -->
+
+  <defs>
+    <radialGradient id="tok1" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#1c1c20"/>
+      <stop offset="100%" stop-color="#0a0a0b"/>
+    </radialGradient>
+    <linearGradient id="tokface" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#2a2a2f"/>
+      <stop offset="100%" stop-color="#1a1a1d"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Vibe Mode token — bottom right, larger, thinner text -->
+  <!-- Shadow/depth layer -->
+  <g transform="translate(1018, 418)">
+    <circle cx="82" cy="82" r="82" fill="#050506"/>
+  </g>
+  <!-- Edge/thickness -->
+  <g transform="translate(1014, 414)">
+    <circle cx="82" cy="82" r="83" fill="none" stroke="#3a3a3f" stroke-width="4"/>
+    <circle cx="82" cy="82" r="82" fill="url(#tokface)" stroke="#2a2930" stroke-width="2"/>
+  </g>
+  <!-- Face -->
+  <g transform="translate(1010, 410)">
+    <circle cx="82" cy="82" r="82" fill="url(#tokface)" stroke="#d6ff3a" stroke-width="2.5"/>
+    <circle cx="82" cy="82" r="76" fill="none" stroke="#d6ff3a" stroke-width="1"/>
+    <circle cx="82" cy="82" r="62" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <text x="82" y="68" text-anchor="middle" font-family="Antonio, Arial Black, sans-serif" font-weight="400" font-size="28" fill="#d6ff3a" letter-spacing="3">VIBE</text>
+    <text x="82" y="96" text-anchor="middle" font-family="Antonio, Arial Black, sans-serif" font-weight="400" font-size="28" fill="#d6ff3a" letter-spacing="3">MODE</text>
+    <text x="82" y="118" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="9" fill="#a8a59c">Dangerously skip</text>
+    <text x="82" y="128" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="9" fill="#a8a59c">permissions.</text>
+  </g>
+
+
+  <!-- === FACTION CARDS: side by side, bottom right === -->
+
+  <!-- Prometheus Labs -->
+  <g transform="translate(530, 250) rotate(-3)">
+    <rect width="220" height="300" rx="6" fill="#0c0c0e" stroke="#2a2930" stroke-width="1.5"/>
+    <text x="170" y="22" font-family="monospace" font-size="8" fill="#56544e" letter-spacing="2" text-anchor="end">FAC · 01</text>
+    <text x="16" y="22" font-family="monospace" font-size="8" fill="#e63227" letter-spacing="2">FACTION CARD</text>
+    <text x="16" y="78" font-family="Antonio, Arial Black, sans-serif" font-weight="700" font-size="28" fill="#ece8df">PROMETHEUS</text>
+    <text x="16" y="108" font-family="Antonio, Arial Black, sans-serif" font-weight="700" font-size="28" fill="#ece8df">LABS</text>
+    <g transform="translate(10, 118)">
+      <circle cx="100" cy="50" r="34" fill="none" stroke="#e63227" stroke-width="1.5"/>
+      <circle cx="100" cy="50" r="22" fill="none" stroke="#ece8df" stroke-width="0.7"/>
+      <line x1="100" y1="10" x2="100" y2="90" stroke="#ece8df" stroke-width="0.5"/>
+      <line x1="60" y1="50" x2="140" y2="50" stroke="#ece8df" stroke-width="0.5"/>
+      <text x="100" y="54" text-anchor="middle" font-family="Antonio, Arial Black, sans-serif" font-size="10" fill="#ece8df" letter-spacing="2">PMTH</text>
+    </g>
+    <text x="16" y="228" font-family="Antonio, Arial Black, sans-serif" font-weight="700" font-size="13" fill="#e63227" letter-spacing="2">▸ MISSION DRIFT</text>
+    <text x="16" y="248" font-family="monospace" font-size="8" fill="#a8a59c">Once per game, flip between nonprofit</text>
+    <text x="16" y="258" font-family="monospace" font-size="8" fill="#a8a59c">and for-profit status to dodge a</text>
+    <text x="16" y="268" font-family="monospace" font-size="8" fill="#a8a59c">regulation card or raise emergency capital.</text>
+  </g>
+
+  <!-- Deep Oracle -->
+  <g transform="translate(760, 220) rotate(3)">
+    <rect width="220" height="300" rx="6" fill="#0c0c0e" stroke="#2a2930" stroke-width="1.5"/>
+    <text x="170" y="22" font-family="monospace" font-size="8" fill="#56544e" letter-spacing="2" text-anchor="end">FAC · 03</text>
+    <text x="16" y="22" font-family="monospace" font-size="8" fill="#e63227" letter-spacing="2">FACTION CARD</text>
+    <text x="16" y="78" font-family="Antonio, Arial Black, sans-serif" font-weight="700" font-size="32" fill="#ece8df">DEEP</text>
+    <text x="16" y="112" font-family="Antonio, Arial Black, sans-serif" font-weight="700" font-size="32" fill="#ece8df">ORACLE</text>
+    <g transform="translate(10, 120)" fill="none" stroke="#ece8df" stroke-width="0.8">
+      <circle cx="100" cy="50" r="40"/>
+      <ellipse cx="100" cy="50" rx="40" ry="14"/>
+      <ellipse cx="100" cy="50" rx="14" ry="40"/>
+      <ellipse cx="100" cy="50" rx="28" ry="40" transform="rotate(45 100 50)"/>
+      <ellipse cx="100" cy="50" rx="28" ry="40" transform="rotate(-45 100 50)"/>
+      <circle cx="100" cy="50" r="3" fill="#ece8df"/>
+    </g>
+    <text x="16" y="228" font-family="Antonio, Arial Black, sans-serif" font-weight="700" font-size="13" fill="#e63227" letter-spacing="2">▸ INFINITE RUNWAY</text>
+    <text x="16" y="248" font-family="monospace" font-size="8" fill="#a8a59c">Acquired by hyperscaler. Immune to</text>
+    <text x="16" y="258" font-family="monospace" font-size="8" fill="#a8a59c">bankruptcy, but must skip one action</text>
+    <text x="16" y="268" font-family="monospace" font-size="8" fill="#a8a59c">per round to attend mandatory all-hands.</text>
+  </g>
+
+
+  <!-- === EVENT CARDS: fanned top right === -->
+
+  <!-- Card 1 (back): NIMBYs -->
+  <g transform="translate(600, 60) rotate(-6)">
     <rect width="220" height="300" rx="6" fill="#0c0c0e" stroke="#2a2930" stroke-width="1.5"/>
     <text x="170" y="22" font-family="monospace" font-size="8" fill="#56544e" letter-spacing="2" text-anchor="end">EVT · 089</text>
     <text x="16" y="22" font-family="monospace" font-size="8" fill="#e63227" letter-spacing="2">POLITICAL</text>
     <text x="16" y="82" font-family="Antonio, Arial Black, sans-serif" font-weight="900" font-size="28" fill="#ece8df">NIMBYS</text>
     <text x="16" y="112" font-family="Antonio, Arial Black, sans-serif" font-weight="900" font-size="28" fill="#ece8df">BLOCK</text>
     <text x="16" y="142" font-family="Antonio, Arial Black, sans-serif" font-weight="900" font-size="28" fill="#ece8df">DATA CTR</text>
-    <!-- Houses art -->
     <g stroke="#ece8df" fill="none" stroke-width="1.2" transform="translate(20, 155)">
       <path d="M20 55 L20 28 L38 14 L56 28 L56 55 Z"/>
       <rect x="33" y="38" width="10" height="17"/>
@@ -62,18 +142,15 @@
       <rect x="133" y="40" width="8" height="15"/>
     </g>
     <text x="110" y="232" text-anchor="middle" font-family="Antonio, Arial Black, sans-serif" font-size="9" fill="#e63227" letter-spacing="2">NOT IN MY YARD</text>
-    <text x="16" y="262" font-family="Georgia, serif" font-style="italic" font-size="9" fill="#56544e">"They formed a Facebook group.</text>
-    <text x="16" y="276" font-family="Georgia, serif" font-style="italic" font-size="9" fill="#56544e">It has 12,000 members."</text>
   </g>
 
-  <!-- Card 2 (middle): Bubble Pop — middle, offset right -->
-  <g transform="translate(750, 100) rotate(2)">
+  <!-- Card 2 (middle): Bubble Pop -->
+  <g transform="translate(740, 40) rotate(1)">
     <rect width="220" height="300" rx="6" fill="#0c0c0e" stroke="#2a2930" stroke-width="1.5"/>
     <text x="170" y="22" font-family="monospace" font-size="8" fill="#56544e" letter-spacing="2" text-anchor="end">EVT · 102</text>
     <text x="16" y="22" font-family="monospace" font-size="8" fill="#e63227" letter-spacing="2">ECONOMIC</text>
     <text x="16" y="82" font-family="Antonio, Arial Black, sans-serif" font-weight="900" font-size="32" fill="#ece8df">BUBBLE</text>
     <text x="16" y="116" font-family="Antonio, Arial Black, sans-serif" font-weight="900" font-size="32" fill="#ece8df">POP</text>
-    <!-- Bubble pop art -->
     <circle cx="110" cy="190" r="42" fill="none" stroke="#e63227" stroke-width="1.5" stroke-dasharray="4 3"/>
     <g stroke="#e63227" stroke-width="2">
       <line x1="56" y1="158" x2="68" y2="170"/>
@@ -84,12 +161,10 @@
       <line x1="110" y1="226" x2="110" y2="238"/>
     </g>
     <text x="110" y="198" text-anchor="middle" font-family="Antonio, Arial Black, sans-serif" font-size="24" fill="#e63227">POP</text>
-    <text x="16" y="264" font-family="Georgia, serif" font-style="italic" font-size="9" fill="#56544e">"Spending $200B/yr on autocomplete</text>
-    <text x="16" y="278" font-family="Georgia, serif" font-style="italic" font-size="9" fill="#56544e">was not a business model."</text>
   </g>
 
-  <!-- Card 3 (front): Peptide Party Leak — top of stack -->
-  <g transform="translate(920, 80) rotate(6)">
+  <!-- Card 3 (front): Peptide Party Leak -->
+  <g transform="translate(880, 50) rotate(6)">
     <rect width="220" height="300" rx="6" fill="#0c0c0e" stroke="#2a2930" stroke-width="1.5"/>
     <text x="170" y="22" font-family="monospace" font-size="8" fill="#56544e" letter-spacing="2" text-anchor="end">EVT · 031</text>
     <text x="16" y="22" font-family="monospace" font-size="8" fill="#e63227" letter-spacing="2">WILDCARD</text>
@@ -97,7 +172,6 @@
     <text x="16" y="106" font-family="Antonio, Arial Black, sans-serif" font-weight="900" font-size="26" fill="#ece8df">PARTY</text>
     <text x="16" y="134" font-family="Antonio, Arial Black, sans-serif" font-weight="900" font-size="26" fill="#ece8df">LEAK</text>
     <g transform="translate(16, 140)" stroke="#ece8df" fill="none" stroke-width="1.3">
-      <!-- Left: loose-lipped face -->
       <circle cx="35" cy="38" r="28"/>
       <line x1="22" y1="30" x2="30" y2="30" stroke-width="2"/>
       <circle cx="45" cy="30" r="4"/>
@@ -106,7 +180,6 @@
       <line x1="27" y1="52" x2="43" y2="52"/>
       <circle cx="57" cy="16" r="3" stroke-dasharray="2 1"/>
       <circle cx="63" cy="8" r="2" stroke-dasharray="2 1"/>
-      <!-- Center: syringe on vial -->
       <rect x="88" y="4" width="8" height="38" rx="1"/>
       <rect x="89" y="32" width="6" height="10" fill="#d6ff3a" stroke="none" rx="0.5"/>
       <line x1="92" y1="4" x2="92" y2="-4"/>
@@ -120,7 +193,6 @@
       <line x1="84" y1="62" x2="100" y2="62"/>
       <rect x="87" y="48" width="10" height="6" rx="1"/>
       <circle cx="92" cy="76" r="3" fill="#d6ff3a" stroke="none"/>
-      <!-- Right: woozy face -->
       <circle cx="150" cy="38" r="28"/>
       <circle cx="140" cy="32" r="4" fill="#ece8df"/>
       <circle cx="162" cy="28" r="4" fill="#ece8df"/>
@@ -132,28 +204,9 @@
     <text x="16" y="278" font-family="Georgia, serif" font-style="italic" font-size="9" fill="#56544e">peptide party."</text>
   </g>
 
-  <!-- Token: Roko Mode (bone/white, behind) -->
-  <g transform="translate(600, 375) rotate(15)">
-    <circle cx="62" cy="62" r="62" fill="url(#tok1)" stroke="#ece8df" stroke-width="3"/>
-    <circle cx="62" cy="62" r="57" fill="none" stroke="#ece8df" stroke-width="1"/>
-    <circle cx="62" cy="62" r="46" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-    <text x="62" y="54" text-anchor="middle" font-family="Antonio, Arial Black, sans-serif" font-weight="700" font-size="20" fill="#ece8df" letter-spacing="3">ROKO</text>
-    <text x="62" y="78" text-anchor="middle" font-family="Antonio, Arial Black, sans-serif" font-weight="700" font-size="20" fill="#ece8df" letter-spacing="3">MODE</text>
-  </g>
-
-  <!-- Token: Vibe Mode (acid green, on top) -->
-  <g transform="translate(510, 435) rotate(-8)">
-    <circle cx="62" cy="62" r="62" fill="url(#tok1)" stroke="#d6ff3a" stroke-width="3"/>
-    <circle cx="62" cy="62" r="57" fill="none" stroke="#d6ff3a" stroke-width="1"/>
-    <circle cx="62" cy="62" r="46" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-    <text x="62" y="54" text-anchor="middle" font-family="Antonio, Arial Black, sans-serif" font-weight="700" font-size="20" fill="#d6ff3a" letter-spacing="3">VIBE</text>
-    <text x="62" y="78" text-anchor="middle" font-family="Antonio, Arial Black, sans-serif" font-weight="700" font-size="20" fill="#d6ff3a" letter-spacing="3">MODE</text>
-  </g>
-
-  <!-- Token gradient -->
-    <radialGradient id="tok1" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#1c1c20"/><stop offset="100%" stop-color="#0a0a0b"/></radialGradient>
 
   <!-- Corner marks -->
+
   <g stroke="#56544e" stroke-width="1" fill="none">
     <path d="M20 20 h16 M20 20 v16"/>
     <path d="M1180 20 h-16 M1180 20 v16"/>
