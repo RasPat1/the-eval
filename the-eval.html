@@ -676,7 +676,9 @@ s.parentNode.insertBefore(a,s)};ttq.load('YOUR_TIKTOK_PIXEL_ID');ttq.page()}(win
 </footer>
 
 <script>
-const ref = new URLSearchParams(window.location.search).get('ref') || 'direct';
+const params = new URLSearchParams(window.location.search);
+const ref = params.get('ref') || params.get('utm_source') || 'direct';
+const utmCampaign = params.get('utm_campaign') || '';
 
 // Funnel: track scroll to cards section
 const cardsSection = document.querySelector('.factions-grid');
@@ -712,7 +714,7 @@ document.querySelectorAll('input[type=email]').forEach((input) => {
 })();
 
 // Shared submit handler
-async function handleSignup(form, emailId, playtestId, msgId) {
+async function handleSignup(form, emailId, playtestId, msgId, signupSource) {
   // Honeypot check
   const honeypot = form.querySelector('input[name="website"]');
   if (honeypot && honeypot.value) return;
@@ -731,7 +733,7 @@ async function handleSignup(form, emailId, playtestId, msgId) {
     const res = await fetch('/api/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, playtest, ref })
+      body: JSON.stringify({ email, playtest, ref, signupSource, utmCampaign })
     });
     const data = await res.json();
     if (res.ok) {
@@ -761,12 +763,12 @@ async function handleSignup(form, emailId, playtestId, msgId) {
 
 document.getElementById('hero-form').addEventListener('submit', (e) => {
   e.preventDefault();
-  handleSignup(e.target, 'hero-email', 'hero-playtest', 'hero-msg');
+  handleSignup(e.target, 'hero-email', 'hero-playtest', 'hero-msg', 'hero');
 });
 
 document.getElementById('notify-form').addEventListener('submit', (e) => {
   e.preventDefault();
-  handleSignup(e.target, 'notify-email', 'playtest-check', 'notify-msg');
+  handleSignup(e.target, 'notify-email', 'playtest-check', 'notify-msg', 'footer');
 });
 </script>
 

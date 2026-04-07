@@ -26,8 +26,8 @@ export default async function handler(req, res) {
       }
     } catch {}
 
-    // Check for duplicates
-    if (subscribers.find((s) => s.email === normalizedEmail)) {
+    // Check for duplicates (handle both old string format and new object format)
+    if (subscribers.find((s) => (typeof s === "string" ? s : s.email) === normalizedEmail)) {
       return res.status(200).json({ message: "Already subscribed" });
     }
 
@@ -41,26 +41,26 @@ export default async function handler(req, res) {
     await put("subscribers.json", JSON.stringify(subscribers), {
       access: "public",
       addRandomSuffix: false,
+      allowOverwrite: true,
     });
 
-    // Send to ConvertKit if configured
-    if (process.env.CONVERTKIT_API_KEY && process.env.CONVERTKIT_FORM_ID) {
-      const tags = [ref || "direct"];
-      if (playtest) tags.push("playtest");
-
+    // Send to Loops if configured
+    if (process.env.LOOPS_API_KEY) {
       try {
-        await fetch(
-          `https://api.convertkit.com/v3/forms/${process.env.CONVERTKIT_FORM_ID}/subscribe`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              api_key: process.env.CONVERTKIT_API_KEY,
-              email: normalizedEmail,
-              tags,
-            }),
-          }
-        );
+        await fetch("https://app.loops.so/api/v1/contacts/update", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.LOOPS_API_KEY}`,
+          },
+          body: JSON.stringify({
+            email: normalizedEmail,
+            signupSource: req.body.signupSource || "homepage",
+            isPlaytester: !!playtest,
+            utmSource: ref || "direct",
+            utmCampaign: req.body.utmCampaign || "",
+          }),
+        });
       } catch {}
     }
 
