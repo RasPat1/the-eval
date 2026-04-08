@@ -1,6 +1,7 @@
 {
   "private": true,
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "@vercel/blob": "^2.3.3",
     "vercel": "^32.3.0"
   }
