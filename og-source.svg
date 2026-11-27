@@ -221,6 +221,6 @@
   <rect x="0" y="590" width="1200" height="40" fill="#e63227"/>
   <text x="600" y="616" text-anchor="middle" font-family="Antonio, Arial Black, sans-serif" font-weight="900" font-size="16" fill="#0a0a0b" letter-spacing="4" text-rendering="geometricPrecision">EVERYBODY DIES  ·  NOBODY WINS  ·  MAYBE ASI</text>
 
-  <!-- Y-axis bar (Vibe Mode green), stacked on the red x-axis bar -->
-  <rect x="0" y="0" width="20" height="590" fill="#d6ff3a"/>
+  <!-- Y-axis bar: Vibe Mode green, a touch darker to match how the anti-aliased badge rings read -->
+  <rect x="0" y="0" width="20" height="590" fill="#c4e938"/>
 </svg>
